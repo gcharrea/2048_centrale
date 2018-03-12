@@ -25,14 +25,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp \
     pion.cpp \
-    plateau.cpp
+    plateau.cpp \
+    random.cpp
 
 HEADERS += \
-        mainwindow.h \
     pion.h \
-    plateau.h
+    plateau.h \
+    random.h
 
-FORMS += \
-        mainwindow.ui
+FORMS +=
+
+DISTFILES +=
