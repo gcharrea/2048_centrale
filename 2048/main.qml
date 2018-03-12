@@ -22,7 +22,7 @@ Window {
             y: 0
             width: 78
             height: 78
-            text: vueObjectCpt.cptQML
+            text: vueObjectCpt.pionQML
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             fontSizeMode: Text.Fit

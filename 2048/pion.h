@@ -1,20 +1,22 @@
 #ifndef PION_H
 #define PION_H
+#include <QObject>
 
-#include <iostream>
 using namespace std;
 
-class pion
+class pion : public QObject
 {
+    Q_OBJECT
+    Q_PROPERTY(QString pionQML READ readValeur NOTIFY pChanged)
 public:
-    pion();
-    pion& operator= (const pion& p);
-    pion& operator+= (const pion& p);
-    pion& operator+= (int v);
-    pion operator+ (const pion& p);
-    void print();
+    explicit pion(QObject *parent = nullptr);
+    Q_INVOKABLE void increment();
+    Q_INVOKABLE void decrement();
+    QString readValeur();
 
-    friend ostream& operator<< (ostream& sortie, pion& p);
+signals:
+    void pChanged();
+public slots:
     
 private:
     int Valeur;
