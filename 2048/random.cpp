@@ -16,8 +16,9 @@ int Random::getInt(int max_value){
     return (int) seed%max_value;
 }
 
-    // Calcul de le prochaine nombre
+    // Calcul de le prochain nombre
 void Random::next(){
+     step++;
      seed = ((seed * 1103515245) + 12345) & 0x7fffffff;
 }
 
@@ -33,4 +34,28 @@ void Random::setSeed(int seed){
 int Random::getSeed(){
     return seed;
 }
+
+void Random::toStep(int s){
+    if(s < step){
+        step = 0;
+        seed = init;
+    }
+    while(step < s){
+        next();
+    }
+}
+
+ostream& operator<< (ostream& out, Random& r){
+    out << r.init << " " << r.step << " " << r.seed << " ";
+    return out;
+}
+
+istream& operator>> (istream& in, Random& r){
+    in >> r.init;
+    in >> r.step;
+    in >> r.seed;
+    return in;
+}
+
+
 

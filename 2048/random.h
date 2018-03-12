@@ -3,6 +3,9 @@
 
 #include <time.h>
 #include <stdio.h>
+#include <iostream>
+
+using namespace std;
 
 class Random
 {
@@ -17,11 +20,17 @@ public:
     void setSeed(int seed);
     void reset();
 
+    void toStep(int s);
+
+    friend ostream& operator<< (ostream& out, Random& r);
+    friend istream& operator>> (istream& in, Random& r);
+
 private:
     void next();
 
 private:
     int seed;
+    int step = 0;
     int init;
 };
 
