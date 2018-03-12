@@ -36,15 +36,9 @@ HEADERS += \
     plateau.h \
     random.h
 
-<<<<<<< HEAD
-FORMS +=
-
-DISTFILES +=
-=======
 FORMS += \
 
 DISTFILES +=
 
 RESOURCES += \
     qml.qrc
->>>>>>> 001719f52c76f39e1e05ad07e9d27404e03bcc33
