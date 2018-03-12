@@ -27,7 +27,7 @@ Window {
         {
             switch (event.key)
             {
-             case Qt.Key_Up :
+             case Qt.Key_Enter :
                  plateau.newGame();
                  break;
 
