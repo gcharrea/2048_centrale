@@ -3,7 +3,7 @@
 
 pion::pion(QObject *parent) : QObject(parent)
 {
-    Valeur = 1;
+    Valeur = 0;
     emit pChanged();
 }
 
@@ -15,7 +15,7 @@ void pion::increment()
 
 void pion::decrement()
 {
-    if (Valeur > 1)
+    if (Valeur > 0)
     {
         Valeur--;
         emit pChanged();
@@ -24,5 +24,7 @@ void pion::decrement()
 
 QString pion::readValeur()
 {
+    if(Valeur == 0)
+        return "";
     return QString::number(pow(2,Valeur));
 }
