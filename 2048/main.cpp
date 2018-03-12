@@ -11,11 +11,7 @@ int main(int argc, char *argv[])
 
     QGuiApplication app(argc, argv);
 
-    pion p;
-
     QQmlApplicationEngine engine;
-
-    engine.rootContext()->setContextProperty("vueObjectCpt", &p);
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())

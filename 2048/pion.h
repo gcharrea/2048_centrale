@@ -7,15 +7,15 @@ using namespace std;
 class pion : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString pionQML READ readValeur NOTIFY pChanged)
 public:
     explicit pion(QObject *parent = nullptr);
     Q_INVOKABLE void increment();
     Q_INVOKABLE void decrement();
-    QString readValeur();
 
 signals:
     void pChanged();
+    int readValeur();
+
 public slots:
     
 private:
