@@ -13,18 +13,35 @@ void pion::increment()
     emit pChanged();
 }
 
-void pion::decrement()
-{
-    if (Valeur > 0)
-    {
-        Valeur--;
-        emit pChanged();
-    }
-}
-
 QString pion::readValeur()
 {
     if(Valeur == 0)
         return "";
     return QString::number(pow(2,Valeur));
+}
+
+int pion::valeurPion()
+{
+    return Valeur;
+}
+
+void pion::free()
+{
+    Valeur = 0;
+}
+
+bool pion::isVide()
+{
+    return Valeur == 0;
+}
+
+bool pion::operator ==(const pion &p)
+{
+    return Valeur == p.Valeur;
+}
+
+pion& pion::operator =(const pion &p)
+{
+    Valeur = p.Valeur;
+    return *this;
 }

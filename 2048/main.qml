@@ -7,17 +7,58 @@ Window {
     width: 640
     height: 480
     color: "#ffffff"
-    title: qsTr("Hello World")
+
 
     Grid {
-        id: grid
-        x: 144
-        y: 40
-        width: 400
-        height: 400
-        rows: 4
-        columns: 4
+        id: rectangle
+        x: 8
+        y: 75
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
+        objectName: "table_jeu"
+        rows : plateau.lignes()
+        columns: plateau.colonnes()
+
+        width: 100 * plateau.lignes()
+        height: 100 * plateau.colonnes()
+        focus : true
+
+        Keys.onPressed:
+        {
+            switch (event.key)
+            {
+             case Qt.Key_Up :
+                 plateau.newGame();
+                 break;
+
+             case Qt.Key_Left:
+                 plateau.gauche();
+                 break;
+
+             case Qt.Key_Right:
+                 plateau.droite();
+                 break;
+            }
+        }
+
+        Repeater
+        {
+            model : plateau.taille()
+            Rectangle
+            {
+                border.color: "black"
+                width: 100
+                height: 100
+
+                Text
+                {
+                    text : plateau.plateauQML[index]
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.verticalCenter: parent.verticalCenter
+                    font.pixelSize: 25
+                }
+            }
+        }
+
     }
 }

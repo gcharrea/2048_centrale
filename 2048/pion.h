@@ -10,11 +10,15 @@ class pion : public QObject
 public:
     explicit pion(QObject *parent = nullptr);
     Q_INVOKABLE void increment();
-    Q_INVOKABLE void decrement();
+    QString readValeur();
+    int valeurPion();
+    bool isVide();
+    void free();
+    bool operator ==(const pion &p);
+    pion& operator =(const pion &p);
 
 signals:
     void pChanged();
-    int readValeur();
 
 public slots:
     
