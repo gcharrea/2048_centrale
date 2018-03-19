@@ -24,6 +24,16 @@ QList<QString>  plateau::readplateauQML()
     return Pions;
 }
 
+QList<QString> plateau::readcolorQML()
+{
+    QList<QString> Pions;
+    QString couleurs[] = {"darkgrey","lightgrey","lightgrey","coral","orange"};
+    for (int i = 0; i < L; i++)
+        for (int j = 0; j < C; j++)
+            Pions.append(couleurs[T[i][j].valeurPion()%5]);
+    return Pions;
+}
+
 int plateau::lignes()
 {
     return L;

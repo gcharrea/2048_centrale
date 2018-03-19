@@ -11,10 +11,12 @@ class plateau : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QList<QString> plateauQML READ readplateauQML NOTIFY plateauQMLChanged)
+    Q_PROPERTY(QList<QString> colorQML READ readcolorQML NOTIFY plateauQMLChanged)
 
 public:
     explicit plateau(int l = 4, int c = 4, QObject *parent = nullptr);
     QList<QString> readplateauQML();
+    QList<QString> readcolorQML();
     Q_INVOKABLE void gauche();
     Q_INVOKABLE void droite();
     Q_INVOKABLE void haut();
