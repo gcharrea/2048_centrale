@@ -132,32 +132,6 @@ ApplicationWindow {
                 }
             }
         }
-
-        Keys.onPressed:
-        {
-            switch (event.key)
-            {
-            case Qt.Key_N :
-                plateau.newGame();
-                break;
-
-            case Qt.Key_Left:
-                plateau.gauche();
-                break;
-
-            case Qt.Key_Right:
-                plateau.droite();
-                break;
-
-            case Qt.Key_Down:
-                plateau.bas();
-                break;
-
-            case Qt.Key_Up:
-                plateau.haut();
-                break;
-            }
-        }
     }
 
     FileDialog {
