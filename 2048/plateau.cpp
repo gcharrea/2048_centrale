@@ -1,9 +1,4 @@
 #include "plateau.h"
-#include "pion.h"
-#include "random.h"
-#include <iostream>
-
-Random alea;
 
 plateau::plateau(int l, int c, QObject *parent) : QObject(parent)
 {
@@ -289,3 +284,37 @@ void plateau::bas()
     if (changement)
         newTile();
 }
+
+void plateau::save(QString filename){
+    filename.remove("file://");
+    cout << "save at : " << filename.toStdString() << endl;
+    ofstream save;
+    save.open(filename.toStdString());
+    save << alea << endl;
+    save << L << " " << C << endl;
+    for (int i=0; i<L; i++){
+        for (int j=0; j<C; j++){
+         save << T[i][j].valeurPion() << " ";
+        }
+        save << endl;
+    }
+    save.close();
+}
+
+void plateau::load(QString filename){
+    ifstream save;
+    save.open(filename.toStdString());
+    save >> alea;
+    save >> L;
+    save >> C;
+    Alloc(L, C);
+    int v;
+    for (int i=0; i<L; i++){
+        for (int j=0; j<C; j++){
+         save >> v;
+         T[i][j] = v;
+        }
+    }
+    save.close();
+}
+

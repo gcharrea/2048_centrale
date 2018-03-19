@@ -32,6 +32,10 @@ Window {
                  fileDialog.open();
                  break;
 
+             case Qt.Key_S :
+                 saveDialog.open();
+                 break;
+
              case Qt.Key_N :
                  plateau.newGame();
                  break;
@@ -90,11 +94,28 @@ Window {
         folder: shortcuts.home
         onAccepted: {
             console.log("You chose: " + fileDialog.fileUrls)
+            plateau.load(fileDialog.fileUrls);
             fileDialog.close();
         }
         onRejected: {
             console.log("Canceled")
             fileDialog.close();
+        }
+    }
+
+    FileDialog {
+        id: saveDialog
+        title: "Select a save"
+        nameFilters: ["2048 game (*.2k8)", "all (*.*)"];
+        folder: shortcuts.home
+        onAccepted: {
+            console.log("You chose: " + saveDialog.fileUrls)
+            plateau.save(saveDialog.fileUrls);
+            saveDialog.close();
+        }
+        onRejected: {
+            console.log("Canceled")
+            saveDialog.close();
         }
     }
 }

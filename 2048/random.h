@@ -4,6 +4,7 @@
 #include <time.h>
 #include <stdio.h>
 #include <iostream>
+#include <fstream>
 
 using namespace std;
 
@@ -22,7 +23,7 @@ public:
 
     void toStep(int s);
 
-    friend ostream& operator<< (ostream& out, Random& r);
+    friend ofstream& operator<< (ofstream& out, Random& r);
     friend istream& operator>> (istream& in, Random& r);
 
 private:

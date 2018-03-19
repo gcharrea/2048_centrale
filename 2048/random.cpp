@@ -45,7 +45,7 @@ void Random::toStep(int s){
     }
 }
 
-ostream& operator<< (ostream& out, Random& r){
+ofstream& operator<< (ofstream& out, Random& r){
     out << r.init << " " << r.step << " " << r.seed << " ";
     return out;
 }

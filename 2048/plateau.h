@@ -1,7 +1,11 @@
 #ifndef PLATEAU_H
 #define PLATEAU_H
+#include <iostream>
+#include <fstream>
 #include <QObject>
 #include "pion.h"
+#include "random.h"
+
 
 class plateau : public QObject
 {
@@ -19,6 +23,8 @@ public:
     Q_INVOKABLE int colonnes();
     Q_INVOKABLE int taille();
     Q_INVOKABLE void newGame();
+    Q_INVOKABLE void save(QString filename);
+    Q_INVOKABLE void load(QString filename);
     void newTile();
     int casesVides();
 
@@ -27,6 +33,8 @@ private:
     int C;
     int L;
     pion** T;
+    Random alea;
+
 
 signals:
     void plateauQMLChanged();
