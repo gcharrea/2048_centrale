@@ -1,5 +1,6 @@
 import QtQuick 2.9
 import QtQuick.Window 2.2
+import QtQuick.Dialogs 1.0
 
 Window {
     id: window
@@ -27,6 +28,10 @@ Window {
         {
             switch (event.key)
             {
+             case Qt.Key_L :
+                 fileDialog.open();
+                 break;
+
              case Qt.Key_N :
                  plateau.newGame();
                  break;
@@ -77,4 +82,21 @@ Window {
             }
         }
     }
+
+    FileDialog {
+        id: fileDialog
+        title: "Select a save"
+        nameFilters: ["2048 game (*.2k8)", "all (*.*)"];
+        folder: shortcuts.home
+        onAccepted: {
+            console.log("You chose: " + fileDialog.fileUrls)
+            fileDialog.close();
+        }
+        onRejected: {
+            console.log("Canceled")
+            fileDialog.close();
+        }
+    }
 }
+
+
