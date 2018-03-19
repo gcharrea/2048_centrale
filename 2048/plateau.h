@@ -9,7 +9,7 @@ class plateau : public QObject
     Q_PROPERTY(QList<QString> plateauQML READ readplateauQML NOTIFY plateauQMLChanged)
 
 public:
-    explicit plateau(QObject *parent = nullptr, int l = 4, int c = 4);
+    explicit plateau(int l = 4, int c = 4, QObject *parent = nullptr);
     QList<QString> readplateauQML();
     Q_INVOKABLE void gauche();
     Q_INVOKABLE void droite();
