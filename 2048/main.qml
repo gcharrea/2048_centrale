@@ -43,6 +43,24 @@ ApplicationWindow {
                     drawer.close()
                 }
             }
+
+            ItemDelegate {
+                text: qsTr("Charger partie")
+                width: parent.width
+                onClicked: {
+                    fileDialog.open()
+                    drawer.close()
+                }
+            }
+
+            ItemDelegate {
+                text: qsTr("Sauver partie")
+                width: parent.width
+                onClicked: {
+                    saveDialog.open()
+                    drawer.close()
+                }
+            }
         }
         onClosed: table_jeu.focus = true
     }
