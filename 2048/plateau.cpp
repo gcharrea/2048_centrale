@@ -5,7 +5,7 @@
 
 Random alea;
 
-plateau::plateau(QObject *parent, int l, int c) : QObject(parent)
+plateau::plateau(int l, int c, QObject *parent) : QObject(parent)
 {
     Alloc(l,c);
     emit plateauQMLChanged();
@@ -163,8 +163,8 @@ void plateau::droite()
         {
             if (T[i][C-1-j] == T[i][C-2-j] && !(T[i][C-1-j].isVide()))
             {
-                T[i][C-2-j].increment();
-                T[i][C-1-j].free();
+                T[i][C-1-j].increment();
+                T[i][C-2-j].free();
                 changement = true;
             }
         }
@@ -265,8 +265,8 @@ void plateau::bas()
         {
             if (T[L-1-i][j] == T[L-2-i][j] && !(T[L-1-i][j].isVide()))
             {
-                T[L-2-i][j].increment();
-                T[L-1-i][j].free();
+                T[L-1-i][j].increment();
+                T[L-2-i][j].free();
                 changement = true;
             }
         }
