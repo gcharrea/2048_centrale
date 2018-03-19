@@ -2,6 +2,7 @@ import QtQuick 2.9
 import QtQuick.Window 2.2
 import QtQuick.Controls 2.2
 import QtQuick.Dialogs 1.0
+import QtQuick.Layouts 1.3
 
 ApplicationWindow {
     id: window
@@ -12,16 +13,41 @@ ApplicationWindow {
 
     header: ToolBar {
         contentHeight: toolButton.implicitHeight
+        RowLayout {
 
-        ToolButton {
-            id: toolButton
-            text: stackView.depth > 1 ? "\u25C0" : "\u2630"
-            font.pixelSize: Qt.application.font.pixelSize * 1.6
-            onClicked: {
-                if (stackView.depth > 1) {
-                    stackView.pop()
-                } else {
-                    drawer.open()
+            ToolButton {
+                id: toolButton
+                text: stackView.depth > 1 ? "\u25C0" : "\u2630"
+                font.pixelSize: Qt.application.font.pixelSize * 1.6
+                onClicked: {
+                    if (stackView.depth > 1) {
+                        stackView.pop()
+                    } else {
+                        drawer.open()
+                    }
+                }
+            }
+
+            ToolButton {
+                id: prevButton
+                text: "\u25C0"
+                font.pixelSize: Qt.application.font.pixelSize * 1.6
+                onClicked: {
+                    // TODO
+                }
+            }
+
+            Text {
+                id: coupText
+                text: plateau.stateQML[0];
+            }
+
+            ToolButton {
+                id: nextButton
+                text: "\u25B6"
+                font.pixelSize: Qt.application.font.pixelSize * 1.6
+                onClicked: {
+                    // TODO
                 }
             }
         }

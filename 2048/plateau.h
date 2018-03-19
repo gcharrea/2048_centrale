@@ -2,6 +2,7 @@
 #define PLATEAU_H
 #include <iostream>
 #include <fstream>
+#include <vector>
 #include <QObject>
 #include "pion.h"
 #include "random.h"
@@ -12,11 +13,14 @@ class plateau : public QObject
     Q_OBJECT
     Q_PROPERTY(QList<QString> plateauQML READ readplateauQML NOTIFY plateauQMLChanged)
     Q_PROPERTY(QList<QString> colorQML READ readcolorQML NOTIFY plateauQMLChanged)
+    Q_PROPERTY(QList<QString> stateQML READ readstateQML NOTIFY stateQMLChanged)
+
 
 public:
     explicit plateau(int l = 4, int c = 4, QObject *parent = nullptr);
     QList<QString> readplateauQML();
     QList<QString> readcolorQML();
+    QList<QString> readstateQML();
     Q_INVOKABLE void gauche();
     Q_INVOKABLE void droite();
     Q_INVOKABLE void haut();
@@ -37,9 +41,12 @@ private:
     pion** T;
     Random alea;
 
+    int coup = 0;
+    vector<int> deplacement;
 
 signals:
     void plateauQMLChanged();
+    void stateQMLChanged();
 };
 
 #endif // PLATEAU_H

@@ -34,6 +34,13 @@ QList<QString> plateau::readcolorQML()
     return Pions;
 }
 
+QList<QString> plateau::readstateQML(){
+    QList<QString> states;
+    states.append(QString::number(coup));
+    states.append(QString::number(deplacement.size()));
+    return states;
+}
+
 int plateau::lignes()
 {
     return L;
@@ -61,7 +68,7 @@ int plateau::casesVides()
 }
 
 void plateau::newTile()
-{
+{    
     int c = casesVides();
     cout << c << endl;
     if (c==0)
@@ -81,6 +88,8 @@ void plateau::newTile()
                     break;
                 }
             }
+
+    emit stateQMLChanged();
 }
 
 void plateau::newGame()
@@ -138,8 +147,11 @@ void plateau::gauche()
     }
 
     // On rajoute une tuile
-    if (changement)
+    if (changement){
         newTile();
+        coup++;
+        deplacement.push_back(0);
+    }
 }
 
 
@@ -189,8 +201,11 @@ void plateau::droite()
     }
 
     // On rajoute une tuile
-    if (changement)
+    if (changement){
         newTile();
+        coup++;
+        deplacement.push_back(1);
+    }
 }
 
 
@@ -240,8 +255,11 @@ void plateau::haut()
     }
 
     // On rajoute une tuile
-    if (changement)
+    if (changement){
         newTile();
+        coup++;
+        deplacement.push_back(2);
+    }
 }
 
 
@@ -291,12 +309,18 @@ void plateau::bas()
     }
 
     // On rajoute une tuile
-    if (changement)
+    if (changement){
         newTile();
+        coup++;
+        deplacement.push_back(3);
+    }
 }
 
 void plateau::save(QString filename){
     filename.remove("file://");
+    if(!filename.contains('.'))
+        filename.append(".2k8");
+
     cout << "save at : " << filename.toStdString() << endl;
     ofstream save;
     save.open(filename.toStdString());
@@ -307,6 +331,10 @@ void plateau::save(QString filename){
          save << T[i][j].valeurPion() << " ";
         }
         save << endl;
+    }
+    save << coup << endl;
+    for(int c : deplacement){
+        save << c << " ";
     }
     save.close();
 }
@@ -326,6 +354,12 @@ void plateau::load(QString filename){
          save >> v;
          T[i][j] = v;
         }
+    }
+    save >> coup;
+    deplacement = vector<int>();
+    for(int i = 0; i < coup; i++){
+        save >> v;
+        deplacement.push_back(v);
     }
     save.close();
     emit plateauQMLChanged();
