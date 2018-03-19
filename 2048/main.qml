@@ -27,7 +27,7 @@ Window {
         {
             switch (event.key)
             {
-             case Qt.Key_Enter :
+             case Qt.Key_N :
                  plateau.newGame();
                  break;
 
@@ -58,15 +58,23 @@ Window {
                 width: 100
                 height: 100
 
-                Text
+                Rectangle
                 {
-                    text : plateau.plateauQML[index]
+                    border.color: "black"
+                    width: 90
+                    height: 90
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.verticalCenter: parent.verticalCenter
-                    font.pixelSize: 25
+
+                    Text
+                    {
+                        text : plateau.plateauQML[index]
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        anchors.verticalCenter: parent.verticalCenter
+                        font.pixelSize: 25
+                    }
                 }
             }
         }
-
     }
 }
