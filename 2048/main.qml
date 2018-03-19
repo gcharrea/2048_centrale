@@ -38,6 +38,14 @@ Window {
              case Qt.Key_Right:
                  plateau.droite();
                  break;
+
+             case Qt.Key_Down:
+                 plateau.bas();
+                 break;
+
+             case Qt.Key_Up:
+                 plateau.haut();
+                 break;
             }
         }
 

@@ -13,8 +13,8 @@ public:
     QList<QString> readplateauQML();
     Q_INVOKABLE void gauche();
     Q_INVOKABLE void droite();
-//    Q_INVOKABLE void haut();
-//    Q_INVOKABLE void bas();
+    Q_INVOKABLE void haut();
+    Q_INVOKABLE void bas();
     Q_INVOKABLE int lignes();
     Q_INVOKABLE int colonnes();
     Q_INVOKABLE int taille();
