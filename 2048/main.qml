@@ -1,6 +1,10 @@
 import QtQuick 2.9
 import QtQuick.Window 2.2
+<<<<<<< HEAD
 import QtQuick.Controls 2.2
+=======
+import QtQuick.Dialogs 1.0
+>>>>>>> 56831966662dca60c324850732ff1d28f2fc5810
 
 ApplicationWindow {
     id: window
@@ -69,7 +73,39 @@ ApplicationWindow {
         width: 100 * plateau.lignes()
         height: 100 * plateau.colonnes()
 
+<<<<<<< HEAD
         focus : true
+=======
+        Keys.onPressed:
+        {
+            switch (event.key)
+            {
+             case Qt.Key_L :
+                 fileDialog.open();
+                 break;
+
+             case Qt.Key_N :
+                 plateau.newGame();
+                 break;
+
+             case Qt.Key_Left:
+                 plateau.gauche();
+                 break;
+
+             case Qt.Key_Right:
+                 plateau.droite();
+                 break;
+
+             case Qt.Key_Down:
+                 plateau.bas();
+                 break;
+
+             case Qt.Key_Up:
+                 plateau.haut();
+                 break;
+            }
+        }
+>>>>>>> 56831966662dca60c324850732ff1d28f2fc5810
 
         Repeater
         {
@@ -125,4 +161,21 @@ ApplicationWindow {
             }
         }
     }
+
+    FileDialog {
+        id: fileDialog
+        title: "Select a save"
+        nameFilters: ["2048 game (*.2k8)", "all (*.*)"];
+        folder: shortcuts.home
+        onAccepted: {
+            console.log("You chose: " + fileDialog.fileUrls)
+            fileDialog.close();
+        }
+        onRejected: {
+            console.log("Canceled")
+            fileDialog.close();
+        }
+    }
 }
+
+
