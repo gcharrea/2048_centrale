@@ -1,10 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Window 2.2
-<<<<<<< HEAD
 import QtQuick.Controls 2.2
-=======
 import QtQuick.Dialogs 1.0
->>>>>>> 56831966662dca60c324850732ff1d28f2fc5810
 
 ApplicationWindow {
     id: window
@@ -73,9 +70,7 @@ ApplicationWindow {
         width: 100 * plateau.lignes()
         height: 100 * plateau.colonnes()
 
-<<<<<<< HEAD
         focus : true
-=======
         Keys.onPressed:
         {
             switch (event.key)
@@ -105,7 +100,6 @@ ApplicationWindow {
                  break;
             }
         }
->>>>>>> 56831966662dca60c324850732ff1d28f2fc5810
 
         Repeater
         {
