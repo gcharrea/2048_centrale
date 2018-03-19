@@ -181,6 +181,7 @@ ApplicationWindow {
             title: "Select a save"
             nameFilters: ["2048 game (*.2k8)", "all (*.*)"];
             folder: shortcuts.home
+            selectExisting: false
             onAccepted: {
                 console.log("You chose: " + saveDialog.fileUrls)
                 plateau.save(saveDialog.fileUrls);
