@@ -45,3 +45,8 @@ pion& pion::operator =(const pion &p)
     Valeur = p.Valeur;
     return *this;
 }
+
+pion& pion::operator =(int v){
+    Valeur = v;
+    return *this;
+}

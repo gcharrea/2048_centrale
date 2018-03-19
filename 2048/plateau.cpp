@@ -303,6 +303,8 @@ void plateau::save(QString filename){
 
 void plateau::load(QString filename){
     ifstream save;
+    filename.remove("file://");
+    cout << "load : " << filename.toStdString() << endl;
     save.open(filename.toStdString());
     save >> alea;
     save >> L;
@@ -312,9 +314,10 @@ void plateau::load(QString filename){
     for (int i=0; i<L; i++){
         for (int j=0; j<C; j++){
          save >> v;
-         //T[i][j] = v;
+         T[i][j] = v;
         }
     }
     save.close();
+    emit plateauQMLChanged();
 }
 

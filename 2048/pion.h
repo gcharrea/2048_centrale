@@ -16,6 +16,8 @@ public:
     void free();
     bool operator ==(const pion &p);
     pion& operator =(const pion &p);
+    pion& operator =(int v);
+
 
 signals:
     void pChanged();
