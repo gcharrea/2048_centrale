@@ -27,12 +27,33 @@ QList<QString>  plateau::readplateauQML()
 QList<QString> plateau::readcolorQML()
 {
     QList<QString> Pions;
-    QString couleurs[] = {"darkgrey","lightgrey","lightgrey","coral","orange"};
+    QString couleurs[] = {"lightgrey","ghostwhite","beige","lightsalmon","coral",
+                          "tomato","orangered","#ffe44d","#ffe033","#ffdd1a",
+                          "#f9d406","gold","#42a51c","orchid"};
     for (int i = 0; i < L; i++)
         for (int j = 0; j < C; j++)
-            Pions.append(couleurs[T[i][j].valeurPion()%5]);
+            Pions.append(couleurs[T[i][j].valeurPion()%14]);
     return Pions;
 }
+
+QList<QString> plateau::readcolorPionQML()
+{
+    QList<QString> Pions;
+    for (int i = 0; i < L; i++)
+        for (int j = 0; j < C; j++)
+        {
+            if (T[i][j].valeurPion()>2)
+            {
+                Pions.append(QString("white"));
+            }
+            else
+            {
+                Pions.append(QString("black"));
+            }
+        }
+    return Pions;
+}
+
 
 QList<QString> plateau::readstateQML(){
     QList<QString> states;
@@ -70,7 +91,6 @@ int plateau::casesVides()
 void plateau::newTile()
 {    
     int c = casesVides();
-    cout << c << endl;
     if (c==0)
         throw("Perdu !");
 
@@ -104,7 +124,8 @@ void plateau::newGame()
 void plateau::gauche()
 {
     bool changement = false;
-    // Ce booléen vérifie si le coup fait quelque chose, s'il ne fait rien, on ne crée pas de nouvelle tuile
+    // Ce booléen vérifie si le coup fait quelque chose, s'il ne fait rien, on ne
+    //crée pas de nouvelle tuile
 
     // On supprime les espaces à gauche
     for (int i=0; i<L; i++)
@@ -121,7 +142,8 @@ void plateau::gauche()
             }
         }
 
-    // On effectue ensuite toutes les additions, on pourra rajouter le calcul du score du coup par ici
+        // On effectue ensuite toutes les additions, on pourra rajouter le calcul du score du
+        //coup par ici
         for (int j = 0; j<C-1; j++)
         {
             if (T[i][j] == T[i][j+1] && !(T[i][j].isVide()))
@@ -158,7 +180,8 @@ void plateau::gauche()
 void plateau::droite()
 {
     bool changement = false;
-    // Ce booléen vérifie si le coup fait quelque chose, s'il ne fait rien, on ne crée pas de nouvelle tuile
+    // Ce booléen vérifie si le coup fait quelque chose, s'il ne fait rien,
+    //on ne crée pas de nouvelle tuile
 
     for (int i=0; i<L; i++)
     {
@@ -266,7 +289,8 @@ void plateau::haut()
 void plateau::bas()
 {
     bool changement = false;
-    // Ce booléen vérifie si le coup fait quelque chose, s'il ne fait rien, on ne crée pas de nouvelle tuile
+    // Ce booléen vérifie si le coup fait quelque chose, s'il ne fait rien,
+    //on ne crée pas de nouvelle tuile
 
     for (int j=0; j<C; j++)
     {

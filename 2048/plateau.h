@@ -14,25 +14,32 @@ class plateau : public QObject
     Q_PROPERTY(QList<QString> plateauQML READ readplateauQML NOTIFY plateauQMLChanged)
     Q_PROPERTY(QList<QString> colorQML READ readcolorQML NOTIFY plateauQMLChanged)
     Q_PROPERTY(QList<QString> stateQML READ readstateQML NOTIFY stateQMLChanged)
+    Q_PROPERTY(QList<QString> colorPionQML READ readcolorPionQML NOTIFY plateauQMLChanged)
 
 
 public:
     explicit plateau(int l = 4, int c = 4, QObject *parent = nullptr);
+
     QList<QString> readplateauQML();
     QList<QString> readcolorQML();
+    QList<QString> readcolorPionQML();
     QList<QString> readstateQML();
+
     Q_INVOKABLE void gauche();
     Q_INVOKABLE void droite();
     Q_INVOKABLE void haut();
     Q_INVOKABLE void bas();
+
     Q_INVOKABLE int lignes();
     Q_INVOKABLE int colonnes();
     Q_INVOKABLE int taille();
+
+    int casesVides();
+    void newTile();
     Q_INVOKABLE void newGame();
+
     Q_INVOKABLE void save(QString filename);
     Q_INVOKABLE void load(QString filename);
-    void newTile();
-    int casesVides();
 
 private:
     void Alloc(int l, int c);

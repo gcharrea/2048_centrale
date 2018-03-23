@@ -3,6 +3,7 @@ import QtQuick.Window 2.2
 import QtQuick.Controls 2.2
 import QtQuick.Dialogs 1.0
 import QtQuick.Layouts 1.3
+import QtQuick.Controls.Styles 1.4
 
 ApplicationWindow {
     id: window
@@ -13,6 +14,7 @@ ApplicationWindow {
 
     header: ToolBar {
         contentHeight: toolButton.implicitHeight
+
         RowLayout {
 
             ToolButton {
@@ -28,27 +30,72 @@ ApplicationWindow {
                 }
             }
 
-            ToolButton {
-                id: prevButton
-                text: "\u25C0"
-                font.pixelSize: Qt.application.font.pixelSize * 1.6
-                onClicked: {
-                    // TODO
+            Rectangle {
+                id: rectangle
+                implicitWidth: 100
+                implicitHeight: 35
+                border.color: "lightgrey"
+                radius: 4
+
+                ToolButton {
+                    id: prevButton
+                    y: 211
+                    text: "\u25C0"
+                    anchors.verticalCenterOffset: -1
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.left: parent.left
+                    font.pixelSize: Qt.application.font.pixelSize * 1.6
+                    onClicked: {
+                        // TODO
+                        table_jeu.focus = true
+                    }
                 }
+
+                Text {
+                    id: coupText
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    text: plateau.stateQML[0];
+                }
+
+                ToolButton {
+                    id: nextButton
+                    x: 132
+                    y: 147
+                    text: "\u25B6"
+                    anchors.verticalCenterOffset: 0
+                    anchors.verticalCenter: prevButton.verticalCenter
+                    anchors.right: parent.right
+                    font.pixelSize: Qt.application.font.pixelSize * 1.6
+                    onClicked: {
+                        // TODO
+                        table_jeu.focus = true
+                    }
+                }
+
             }
 
-            Text {
-                id: coupText
-                text: plateau.stateQML[0];
-            }
+            ToolButton
+            {
+                id : newButton
+                text: "Nouvelle partie"
+                focusPolicy: Qt.ClickFocus
+                highlighted: false
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                font.pixelSize: Qt.application.font.pixelSize
 
-            ToolButton {
-                id: nextButton
-                text: "\u25B6"
-                font.pixelSize: Qt.application.font.pixelSize * 1.6
                 onClicked: {
-                    // TODO
+                    plateau.newGame()
+                    table_jeu.focus = true
                 }
+
+                background: Rectangle {
+                    implicitWidth: 100
+                    implicitHeight: 35
+                    border.color: "lightgrey"
+                    radius: 4
+                }
+
             }
         }
     }
@@ -111,7 +158,7 @@ ApplicationWindow {
         width: 100 * plateau.lignes()
         height: 100 * plateau.colonnes()
         radius: 10
-        color : "grey"
+        color : "darkgrey"
 
         focus : true
 
@@ -177,9 +224,20 @@ ApplicationWindow {
                         Text
                         {
                             text : plateau.plateauQML[index]
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            anchors.verticalCenter: parent.verticalCenter
-                            font.pixelSize: 25
+                            color : plateau.colorPionQML[index]
+
+                            anchors.rightMargin: 5
+                            anchors.leftMargin: 5
+                            anchors.bottomMargin: 5
+                            anchors.topMargin: 5
+                            anchors.fill: parent
+
+                            verticalAlignment: Text.AlignVCenter
+                            horizontalAlignment: Text.AlignHCenter
+                            font.family: "Tahoma"
+                            minimumPixelSize: 20
+                            font.pixelSize: 40
+                            fontSizeMode: Text.HorizontalFit
                         }
                     }
                 }
