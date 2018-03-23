@@ -39,11 +39,12 @@ ApplicationWindow {
 
                 ToolButton {
                     id: prevButton
-                    y: 211
+                    background: none
                     text: "\u25C0"
                     anchors.verticalCenterOffset: -1
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
+                    anchors.leftMargin: 5
                     font.pixelSize: Qt.application.font.pixelSize * 1.6
                     onClicked: {
                         // TODO
@@ -60,12 +61,12 @@ ApplicationWindow {
 
                 ToolButton {
                     id: nextButton
-                    x: 132
-                    y: 147
+                    background: none
                     text: "\u25B6"
                     anchors.verticalCenterOffset: 0
                     anchors.verticalCenter: prevButton.verticalCenter
                     anchors.right: parent.right
+                    anchors.rightMargin: 5
                     font.pixelSize: Qt.application.font.pixelSize * 1.6
                     onClicked: {
                         // TODO
