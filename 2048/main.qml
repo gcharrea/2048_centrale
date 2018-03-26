@@ -225,12 +225,12 @@ ApplicationWindow {
                         anchors.horizontalCenter: parent.horizontalCenter
                         anchors.verticalCenter: parent.verticalCenter
 
-                        color : plateau.colorQML[index]
+                        color : plateau.plateauQML[index*plateau.nbPara() + 1]
 
                         Text
                         {
-                            text : plateau.plateauQML[index]
-                            color : plateau.colorPionQML[index]
+                            text : plateau.plateauQML[index*plateau.nbPara()]
+                            color : plateau.plateauQML[index*plateau.nbPara() + 2]
 
                             anchors.rightMargin: 5
                             anchors.leftMargin: 5
