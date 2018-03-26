@@ -371,7 +371,7 @@ void plateau::next(){
         saveLocked = true;
 
         coup++;
-        fakePlay(historique[coup]);
+        fakePlay(historique[coup-1]);
 
         saveLocked = false;
     }
