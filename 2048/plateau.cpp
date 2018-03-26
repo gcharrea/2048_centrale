@@ -113,7 +113,15 @@ void plateau::gauche()
                 jtemp--;
                 changement = true;
             }
+
+            if (jtemp != j)
+            {
+                T[i][j].depl = "gauche";
+                T[i][j].nb = j-jtemp;
+            }
         }
+        emit animQML();
+        initDepl();
 
         // On effectue ensuite toutes les additions, on pourra rajouter le calcul du score du
         //coup par ici
@@ -124,8 +132,13 @@ void plateau::gauche()
                 T[i][j].increment();
                 T[i][j+1].free();
                 changement = true;
+
+                T[i][j+1].depl = "gauche";
+                T[i][j+1].nb = 1;
             }
         }
+        emit animQML();
+        initDepl();
 
     // On va maintenant chercher à supprimer les espaces créés lors des additions
         for (int j=1; j<C; j++)
@@ -138,7 +151,15 @@ void plateau::gauche()
                 jtemp--;
                 changement = true;
             }
+
+            if (jtemp != j)
+            {
+                T[i][j].depl = "gauche";
+                T[i][j].nb = j-jtemp;
+            }
         }
+        emit animQML();
+        initDepl();
     }
 
     // On rajoute une tuile
@@ -362,3 +383,25 @@ void plateau::load(QString filename){
     emit plateauQMLChanged();
 }
 
+void plateau::initDepl(){
+    for (int i=0; i<L; i++)
+        for (int j=0; j<C; j++)
+        {
+            T[i][j].depl = "";
+            T[i][j].nb = 0;
+        }
+}
+
+
+QList<QString> plateau::readDeplQML(){
+    QList<QString> depl;
+
+    for (int i=0; i<L; i++)
+        for (int j=0; j<C; j++)
+        {
+            depl.append(T[i][j].depl);
+            depl.append(QString::number(T[i][j].nb));
+        }
+
+    return depl;
+}

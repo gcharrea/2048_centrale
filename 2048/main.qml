@@ -217,6 +217,19 @@ ApplicationWindow {
                     height: 100
                     color: "#00000000"
 
+                    states: [
+
+                        State {
+                            name: "gauche"
+                            when: plateau.deplQML[index*2 + 0] === "gauche"
+                            PropertyChanges {
+                                target: this
+                                x : this.x - 100*plateau.deplQML[index*2 + 1]
+                            }
+                        }
+
+                    ]
+
                     Rectangle
                     {
                         width: 90

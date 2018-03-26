@@ -13,6 +13,7 @@ class plateau : public QObject
     Q_OBJECT
     Q_PROPERTY(QList<QString> plateauQML READ readplateauQML NOTIFY plateauQMLChanged)
     Q_PROPERTY(QList<QString> stateQML READ readstateQML NOTIFY stateQMLChanged)
+    Q_PROPERTY(QList<QString> deplQML READ readDeplQML NOTIFY animQML)
 
 
 public:
@@ -20,6 +21,9 @@ public:
 
     QList<QString> readplateauQML();
     QList<QString> readstateQML();
+    QList<QString> readDeplQML();
+
+    void initDepl();
 
     Q_INVOKABLE void gauche();
     Q_INVOKABLE void droite();
@@ -51,6 +55,7 @@ private:
 signals:
     void plateauQMLChanged();
     void stateQMLChanged();
+    void animQML();
 };
 
 #endif // PLATEAU_H

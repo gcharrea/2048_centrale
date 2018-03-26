@@ -20,6 +20,9 @@ public:
 
     QString Couleur;
 
+    QString depl;
+    int nb;
+
 public slots:
     
 private:
