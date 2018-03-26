@@ -22,38 +22,12 @@ QList<QString>  plateau::readplateauQML()
     QList<QString> Pions;
     for (int i = 0; i < L; i++)
         for (int j = 0; j < C; j++)
-            Pions.append(T[i][j].readValeur());
+            Pions.append(T[i][j].readPion());
     return Pions;
 }
 
-QList<QString> plateau::readcolorQML()
-{
-    QList<QString> Pions;
-    QString couleurs[] = {"lightgrey","ghostwhite","beige","lightsalmon","coral",
-                          "tomato","orangered","#ffe44d","#ffe033","#ffdd1a",
-                          "#f9d406","gold","#42a51c","orchid"};
-    for (int i = 0; i < L; i++)
-        for (int j = 0; j < C; j++)
-            Pions.append(couleurs[T[i][j].valeurPion()%14]);
-    return Pions;
-}
-
-QList<QString> plateau::readcolorPionQML()
-{
-    QList<QString> Pions;
-    for (int i = 0; i < L; i++)
-        for (int j = 0; j < C; j++)
-        {
-            if (T[i][j].valeurPion()>2)
-            {
-                Pions.append(QString("white"));
-            }
-            else
-            {
-                Pions.append(QString("black"));
-            }
-        }
-    return Pions;
+int plateau::nbPara(){
+    return 3;
 }
 
 QList<QString> plateau::readstateQML(){

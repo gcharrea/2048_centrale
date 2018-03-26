@@ -4,20 +4,34 @@
 pion::pion(QObject *parent) : QObject(parent)
 {
     Valeur = 0;
-    emit pChanged();
+    changeCouleur();
 }
 
 void pion::increment()
 {
     Valeur++;
-    emit pChanged();
+    changeCouleur();
 }
 
-QString pion::readValeur()
+QList<QString> pion::readPion()
 {
+    QList<QString> parametres;
     if(Valeur == 0)
-        return "";
-    return QString::number(pow(2,Valeur));
+        parametres.append("");
+    else
+        parametres.append(QString::number(pow(2,Valeur)));
+    parametres.append(Couleur);
+
+    if (Valeur>2)
+    {
+        parametres.append(QString("white"));
+    }
+    else
+    {
+        parametres.append(QString("black"));
+    }
+
+    return parametres;
 }
 
 int pion::valeurPion()
@@ -28,6 +42,7 @@ int pion::valeurPion()
 void pion::free()
 {
     Valeur = 0;
+    changeCouleur();
 }
 
 bool pion::isVide()
@@ -43,10 +58,19 @@ bool pion::operator ==(const pion &p)
 pion& pion::operator =(const pion &p)
 {
     Valeur = p.Valeur;
+    Couleur = p.Couleur;
     return *this;
 }
 
 pion& pion::operator =(int v){
     Valeur = v;
+    changeCouleur();
     return *this;
+}
+
+void pion::changeCouleur(){
+    QString couleurs []=   {"lightgrey","ghostwhite","beige","lightsalmon","coral",
+                            "tomato","orangered","#ffe44d","#ffe033","#ffdd1a",
+                            "#f9d406","gold","#42a51c","orchid"};
+    Couleur = couleurs[Valeur%14];
 }

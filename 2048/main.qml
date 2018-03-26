@@ -39,7 +39,10 @@ ApplicationWindow {
 
                 ToolButton {
                     id: prevButton
-                    background: none
+                    background: Rectangle{
+                        color: "#00000000"
+                    }
+
                     text: "\u25C0"
                     anchors.verticalCenterOffset: -1
                     anchors.verticalCenter: parent.verticalCenter
@@ -61,7 +64,9 @@ ApplicationWindow {
 
                 ToolButton {
                     id: nextButton
-                    background: none
+                    background: Rectangle{
+                        color: "#00000000"
+                    }
                     text: "\u25B6"
                     anchors.verticalCenterOffset: 0
                     anchors.verticalCenter: prevButton.verticalCenter
@@ -220,12 +225,12 @@ ApplicationWindow {
                         anchors.horizontalCenter: parent.horizontalCenter
                         anchors.verticalCenter: parent.verticalCenter
 
-                        color : plateau.colorQML[index]
+                        color : plateau.plateauQML[index*plateau.nbPara() + 1]
 
                         Text
                         {
-                            text : plateau.plateauQML[index]
-                            color : plateau.colorPionQML[index]
+                            text : plateau.plateauQML[index*plateau.nbPara()]
+                            color : plateau.plateauQML[index*plateau.nbPara() + 2]
 
                             anchors.rightMargin: 5
                             anchors.leftMargin: 5
