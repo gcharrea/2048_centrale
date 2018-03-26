@@ -21,6 +21,16 @@ QList<QString> pion::readPion()
     else
         parametres.append(QString::number(pow(2,Valeur)));
     parametres.append(Couleur);
+
+    if (Valeur>2)
+    {
+        parametres.append(QString("white"));
+    }
+    else
+    {
+        parametres.append(QString("black"));
+    }
+
     return parametres;
 }
 
