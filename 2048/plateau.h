@@ -38,8 +38,16 @@ public:
     void newTile();
     Q_INVOKABLE void newGame();
 
+    Q_INVOKABLE void previous();
+    Q_INVOKABLE void next();
+
     Q_INVOKABLE void save(QString filename);
     Q_INVOKABLE void load(QString filename);
+
+private:
+    void addCoup(int c);
+    void resetHistorique();
+    void fakePlay(int c);
 
 private:
     void Alloc(int l, int c);
@@ -48,8 +56,9 @@ private:
     pion** T;
     Random alea;
 
+    bool saveLocked = false;
     int coup = 0;
-    vector<int> deplacement;
+    vector<int> historique;
 
 signals:
     void plateauQMLChanged();
