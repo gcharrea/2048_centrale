@@ -50,7 +50,7 @@ ApplicationWindow {
                     anchors.leftMargin: 5
                     font.pixelSize: Qt.application.font.pixelSize * 1.6
                     onClicked: {
-                        // TODO
+                        plateau.previous();
                         table_jeu.focus = true
                     }
                 }
@@ -74,7 +74,7 @@ ApplicationWindow {
                     anchors.rightMargin: 5
                     font.pixelSize: Qt.application.font.pixelSize * 1.6
                     onClicked: {
-                        // TODO
+                        plateau.next();
                         table_jeu.focus = true
                     }
                 }

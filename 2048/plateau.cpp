@@ -8,6 +8,8 @@ plateau::plateau(int l, int c, QObject *parent) : QObject(parent)
 
 void plateau::Alloc(int l, int c)
 {
+    coup = 0;
+    resetHistorique();
     L = l;
     C = c;
     T = new pion*[L];
@@ -30,8 +32,13 @@ int plateau::nbPara(){
 
 QList<QString> plateau::readstateQML(){
     QList<QString> states;
-    states.append(QString::number(coup));
-    states.append(QString::number(deplacement.size()));
+    QString sCoup = QString::number(coup);
+    if(coup != (int) historique.size()){
+        sCoup.append("/");
+        sCoup.append(QString::number(historique.size()));
+    }
+    states.append(sCoup);
+    states.append(QString::number(historique.size()));
     return states;
 }
 
@@ -87,12 +94,14 @@ void plateau::newTile()
 
 void plateau::newGame()
 {
+    if(!saveLocked)
+        alea = Random();
     for (int i=0; i<L; i++)
         for (int j=0; j<C; j++)
             T[i][j].free();
+    resetHistorique();
     newTile();
 }
-
 
 void plateau::gauche()
 {
@@ -164,12 +173,10 @@ void plateau::gauche()
 
     // On rajoute une tuile
     if (changement){
+        addCoup(0);
         newTile();
-        coup++;
-        deplacement.push_back(0);
     }
 }
-
 
 void plateau::droite()
 {
@@ -219,12 +226,10 @@ void plateau::droite()
 
     // On rajoute une tuile
     if (changement){
+        addCoup(1);
         newTile();
-        coup++;
-        deplacement.push_back(1);
     }
 }
-
 
 void plateau::haut()
 {
@@ -273,12 +278,10 @@ void plateau::haut()
 
     // On rajoute une tuile
     if (changement){
+        addCoup(2);
         newTile();
-        coup++;
-        deplacement.push_back(2);
     }
 }
-
 
 void plateau::bas()
 {
@@ -328,9 +331,70 @@ void plateau::bas()
 
     // On rajoute une tuile
     if (changement){
+        addCoup(3);
         newTile();
+    }
+}
+
+void plateau::addCoup(int c){
+    if(!saveLocked){
+        if(coup < (int) historique.size()){
+            historique.resize(coup);
+        }
         coup++;
-        deplacement.push_back(3);
+        historique.push_back(c);
+    }
+}
+
+void plateau::resetHistorique(){
+    if(!saveLocked){
+        coup = 0;
+        historique.clear();
+    }
+}
+
+void plateau::fakePlay(int c){
+    switch (c) {
+    case 0:
+        gauche();
+        break;
+    case 1:
+        droite();
+        break;
+    case 2:
+        haut();
+        break;
+    case 3:
+        bas();
+        break;
+    default:
+        break;
+    }
+}
+
+void plateau::previous(){
+    if(coup > 0){
+        saveLocked = true;
+
+        coup--;
+        alea.reset();
+        newGame();
+        for(int i = 0; i < coup; i++){
+            fakePlay(historique[i]);
+        }
+
+        saveLocked = false;
+    }
+}
+
+void plateau::next(){
+    if(coup < (int) historique.size()){
+        saveLocked = true;
+
+        coup++;
+        fakePlay(historique[coup-1]);
+
+        saveLocked = false;
     }
 }
 
@@ -351,7 +415,7 @@ void plateau::save(QString filename){
         save << endl;
     }
     save << coup << endl;
-    for(int c : deplacement){
+    for(int c : historique){
         save << c << " ";
     }
     save.close();
@@ -374,10 +438,10 @@ void plateau::load(QString filename){
         }
     }
     save >> coup;
-    deplacement = vector<int>();
+    historique = vector<int>();
     for(int i = 0; i < coup; i++){
         save >> v;
-        deplacement.push_back(v);
+        historique.push_back(v);
     }
     save.close();
     emit plateauQMLChanged();
