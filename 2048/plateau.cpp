@@ -1,4 +1,5 @@
 #include "plateau.h"
+#include <cmath>
 
 plateau::plateau(int l, int c, QObject *parent) : QObject(parent)
 {
