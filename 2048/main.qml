@@ -4,6 +4,7 @@ import QtQuick.Controls 2.2
 import QtQuick.Dialogs 1.0
 import QtQuick.Layouts 1.3
 import QtQuick.Controls.Styles 1.4
+import Qt.labs.calendar 1.0
 
 ApplicationWindow {
     id: window
@@ -208,53 +209,19 @@ ApplicationWindow {
             }
         }
 
-        Grid {
-            anchors.fill: parent
 
-            rows : plateau.lignes()
-            columns: plateau.colonnes()
-
-            Repeater
+        Repeater
             {
                 model : plateau.taille()
-                Rectangle
+                Tuile
                 {
-                    width: 100
-                    height: 100
-                    color: "#00000000"
-
-                    Rectangle
-                    {
-                        width: 90
-                        height: 90
-                        radius: 10
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        color : plateau.plateauQML[index*plateau.nbPara() + 1]
-
-                        Text
-                        {
-                            text : plateau.plateauQML[index*plateau.nbPara()]
-                            color : plateau.plateauQML[index*plateau.nbPara() + 2]
-
-                            anchors.rightMargin: 5
-                            anchors.leftMargin: 5
-                            anchors.bottomMargin: 5
-                            anchors.topMargin: 5
-                            anchors.fill: parent
-
-                            verticalAlignment: Text.AlignVCenter
-                            horizontalAlignment: Text.AlignHCenter
-                            font.family: "Tahoma"
-                            minimumPixelSize: 20
-                            font.pixelSize: 40
-                            fontSizeMode: Text.HorizontalFit
-                        }
-                    }
+                    i: index%4
+                    j: (index - i)/4
+                    c: plateau.plateauQML[index*plateau.nbPara() + 1]
+                    cTexte: plateau.plateauQML[index*plateau.nbPara() + 2]
+                    texte: plateau.plateauQML[index*plateau.nbPara() + 0]
                 }
             }
-        }
 
         FileDialog {
             id: fileDialog
@@ -289,7 +256,5 @@ ApplicationWindow {
             }
         }
     }
-
 }
-
 
