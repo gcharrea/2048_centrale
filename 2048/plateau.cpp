@@ -8,7 +8,6 @@ plateau::plateau(int l, int c, QObject *parent) : QObject(parent)
 
 void plateau::Alloc(int l, int c)
 {
-    coup = 0;
     resetHistorique();
     L = l;
     C = c;
@@ -39,6 +38,13 @@ QList<QString> plateau::readstateQML(){
     }
     states.append(sCoup);
     states.append(QString::number(historique.size()));
+
+    QString sScore = "Score : " + QString::number(score);
+    if(score != maxScore){
+        sScore.append("/");
+        sScore.append(QString::number(maxScore));
+    }
+    states.append(sScore);
     return states;
 }
 
@@ -71,8 +77,6 @@ int plateau::casesVides()
 void plateau::newTile()
 {    
     int c = casesVides();
-    if (c==0)
-        throw("Perdu !");
 
     int r = alea.getInt(c) + 1;
 
@@ -90,6 +94,31 @@ void plateau::newTile()
             }
 
     emit stateQMLChanged();
+
+
+    if(c==1 && !saveLocked){
+        saveLocked = true;
+        this->blockSignals(true);
+
+        if(gauche()){
+            coup++;
+            previous();
+        }else if(droite()){
+            coup++;
+            previous();
+        }else if(haut()){
+            coup++;
+            previous();
+        }else if(bas()){
+            coup++;
+            previous();
+        }else{
+            std::cout << "game over" << std::endl;
+        }
+
+        this->blockSignals(false);
+        saveLocked = false;
+    }
 }
 
 void plateau::newGame()
@@ -103,7 +132,7 @@ void plateau::newGame()
     newTile();
 }
 
-void plateau::gauche()
+bool plateau::gauche()
 {
     bool changement = false;
     // Ce booléen vérifie si le coup fait quelque chose, s'il ne fait rien, on ne
@@ -140,6 +169,7 @@ void plateau::gauche()
             {
                 T[i][j].increment();
                 T[i][j+1].free();
+                this->increaseScore(T[i][j].valeurPion());
                 changement = true;
 
                 T[i][j+1].depl = "gauche";
@@ -176,9 +206,10 @@ void plateau::gauche()
         addCoup(0);
         newTile();
     }
+    return changement;
 }
 
-void plateau::droite()
+bool plateau::droite()
 {
     bool changement = false;
     // Ce booléen vérifie si le coup fait quelque chose, s'il ne fait rien,
@@ -205,6 +236,7 @@ void plateau::droite()
             if (T[i][C-1-j] == T[i][C-2-j] && !(T[i][C-1-j].isVide()))
             {
                 T[i][C-1-j].increment();
+                this->increaseScore(T[i][C-1-j].valeurPion());
                 T[i][C-2-j].free();
                 changement = true;
             }
@@ -229,9 +261,10 @@ void plateau::droite()
         addCoup(1);
         newTile();
     }
+    return changement;
 }
 
-void plateau::haut()
+bool plateau::haut()
 {
     bool changement = false;
     // Ce booléen vérifie si le coup fait quelque chose, s'il ne fait rien, on ne crée pas de nouvelle tuile
@@ -258,6 +291,7 @@ void plateau::haut()
             {
                 T[i][j].increment();
                 T[i+1][j].free();
+                this->increaseScore(T[i][j].valeurPion());
                 changement = true;
             }
         }
@@ -281,9 +315,10 @@ void plateau::haut()
         addCoup(2);
         newTile();
     }
+    return changement;
 }
 
-void plateau::bas()
+bool plateau::bas()
 {
     bool changement = false;
     // Ce booléen vérifie si le coup fait quelque chose, s'il ne fait rien,
@@ -310,6 +345,7 @@ void plateau::bas()
             if (T[L-1-i][j] == T[L-2-i][j] && !(T[L-1-i][j].isVide()))
             {
                 T[L-1-i][j].increment();
+                this->increaseScore(T[L-1-i][j].valeurPion());
                 T[L-2-i][j].free();
                 changement = true;
             }
@@ -334,6 +370,7 @@ void plateau::bas()
         addCoup(3);
         newTile();
     }
+    return changement;
 }
 
 void plateau::addCoup(int c){
@@ -350,7 +387,9 @@ void plateau::resetHistorique(){
     if(!saveLocked){
         coup = 0;
         historique.clear();
+        maxScore = 0;
     }
+    score = 0;
 }
 
 void plateau::fakePlay(int c){
@@ -395,6 +434,13 @@ void plateau::next(){
         fakePlay(historique[coup-1]);
 
         saveLocked = false;
+    }
+}
+
+void plateau::increaseScore(int v){
+    score += pow(2, v);
+    if(!saveLocked){
+        maxScore = score;
     }
 }
 
@@ -455,7 +501,6 @@ void plateau::initDepl(){
             T[i][j].nb = 0;
         }
 }
-
 
 QList<QString> plateau::readDeplQML(){
     QList<QString> depl;

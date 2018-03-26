@@ -25,10 +25,10 @@ public:
 
     void initDepl();
 
-    Q_INVOKABLE void gauche();
-    Q_INVOKABLE void droite();
-    Q_INVOKABLE void haut();
-    Q_INVOKABLE void bas();
+    Q_INVOKABLE bool gauche();
+    Q_INVOKABLE bool droite();
+    Q_INVOKABLE bool haut();
+    Q_INVOKABLE bool bas();
 
     Q_INVOKABLE int lignes();
     Q_INVOKABLE int colonnes();
@@ -45,6 +45,8 @@ public:
     Q_INVOKABLE void save(QString filename);
     Q_INVOKABLE void load(QString filename);
 
+    void increaseScore(int v);
+
 private:
     void addCoup(int c);
     void resetHistorique();
@@ -60,6 +62,8 @@ private:
     bool saveLocked = false;
     int coup = 0;
     vector<int> historique;
+    int score;
+    int maxScore;
 
 signals:
     void plateauQMLChanged();

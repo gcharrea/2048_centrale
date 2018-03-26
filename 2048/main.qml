@@ -103,6 +103,12 @@ ApplicationWindow {
                 }
 
             }
+
+            Text {
+                id: scoreText
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                text: plateau.stateQML[2];
+            }
         }
     }
 
