@@ -39,7 +39,10 @@ ApplicationWindow {
 
                 ToolButton {
                     id: prevButton
-                    background: none
+                    background: Rectangle{
+                        color: "#00000000"
+                    }
+
                     text: "\u25C0"
                     anchors.verticalCenterOffset: -1
                     anchors.verticalCenter: parent.verticalCenter
@@ -61,7 +64,9 @@ ApplicationWindow {
 
                 ToolButton {
                     id: nextButton
-                    background: none
+                    background: Rectangle{
+                        color: "#00000000"
+                    }
                     text: "\u25B6"
                     anchors.verticalCenterOffset: 0
                     anchors.verticalCenter: prevButton.verticalCenter
