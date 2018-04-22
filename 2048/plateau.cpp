@@ -32,20 +32,35 @@ int plateau::nbPara(){
 
 QList<QString> plateau::readstateQML(){
     QList<QString> states;
+        //0
     QString sCoup = QString::number(coup);
     if(coup != (int) historique.size()){
         sCoup.append("/");
         sCoup.append(QString::number(historique.size()));
     }
     states.append(sCoup);
+        //1
     states.append(QString::number(historique.size()));
 
+        //2
     QString sScore = "Score : " + QString::number(score);
     if(score != maxScore){
         sScore.append("/");
         sScore.append(QString::number(maxScore));
     }
     states.append(sScore);
+
+        //3 actual player
+    states.append(playerName);
+
+        //4 best score
+    QString sBScore = "";
+    if(bestScore > 0){
+        sBScore = "Best player: " + bestPlayerName +
+                    " : " + QString::number(bestScore);
+    }
+    states.append(sBScore);
+
     return states;
 }
 
@@ -96,7 +111,6 @@ void plateau::newTile()
 
     emit stateQMLChanged();
 
-
     if(c==1 && !saveLocked){
         saveLocked = true;
         this->blockSignals(true);
@@ -114,7 +128,8 @@ void plateau::newTile()
             coup++;
             previous();
         }else{
-            std::cout << "game over" << std::endl;
+            this->blockSignals(false);
+            emit signalGameOver();
         }
 
         this->blockSignals(false);
@@ -131,6 +146,7 @@ void plateau::newGame()
             T[i][j].free();
     resetHistorique();
     newTile();
+    loadBestScore();
 }
 
 bool plateau::gauche()
@@ -445,6 +461,29 @@ void plateau::increaseScore(int v){
     }
 }
 
+void plateau::saveScore(){
+    if(score > bestScore){
+        bestPlayerName = playerName;
+        bestScore = score;
+        ofstream save;
+        save.open("2048BestScore.dat");
+        save << bestPlayerName.toStdString() << endl;
+        save << bestScore << endl;
+    }
+}
+
+void plateau::loadBestScore(){
+    ifstream save("2048BestScore.dat");
+    if(save){
+        string name;
+        save >> name;
+        bestPlayerName = QString::fromStdString(name);
+        save >> bestScore;
+        save.close();
+    }
+}
+
+
 void plateau::save(QString filename){
     filename.remove("file://");
     if(!filename.contains('.'))
@@ -514,4 +553,13 @@ QList<QString> plateau::readDeplQML(){
         }
 
     return depl;
+}
+
+void plateau::changeName(int pos, int delta){
+    QString sA = "A";
+    char A = sA.at(0).toLatin1();
+    char c = playerName.at(pos).toLatin1();
+    c = (c - A + 26 + delta)%26 + A;
+    playerName[pos] = QChar::fromLatin1(c);
+    emit stateQMLChanged();
 }

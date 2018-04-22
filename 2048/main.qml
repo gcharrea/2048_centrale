@@ -13,6 +13,18 @@ ApplicationWindow {
     height: 480
     color: "#ffffff"
 
+
+    function setGameOver(){
+        endGameDialog.open();
+    }
+
+    Connections {
+        target: plateau
+        onSignalGameOver: {
+            setGameOver();
+        }
+    }
+
     header: ToolBar {
         contentHeight: toolButton.implicitHeight
 
@@ -156,9 +168,6 @@ ApplicationWindow {
         anchors.fill: parent
     }
 
-
-
-
     // Partie table de jeu
 
     Rectangle
@@ -211,17 +220,213 @@ ApplicationWindow {
 
 
         Repeater
+        {
+            model : plateau.taille()
+            Tuile
             {
-                model : plateau.taille()
-                Tuile
-                {
-                    i: index%4
-                    j: (index - i)/4
-                    c: plateau.plateauQML[index*plateau.nbPara() + 1]
-                    cTexte: plateau.plateauQML[index*plateau.nbPara() + 2]
-                    texte: plateau.plateauQML[index*plateau.nbPara() + 0]
-                }
+                i: index%4
+                j: (index - i)/4
+                c: plateau.plateauQML[index*plateau.nbPara() + 1]
+                cTexte: plateau.plateauQML[index*plateau.nbPara() + 2]
+                texte: plateau.plateauQML[index*plateau.nbPara() + 0]
             }
+        }
+
+        Dialog {
+            id: endGameDialog
+            topPadding: 0
+            visible: false
+
+            Rectangle {
+                id: rectangle1
+                width: 400
+                height: 290
+                color: "#ffffff"
+                border.width: 3
+                border.color: "black"
+                radius: 8
+                anchors.verticalCenter: window.verticalCenter
+                anchors.horizontalCenter: window.horizontalCenter
+
+                ColumnLayout {
+                    id: columnLayout
+                    width: 100
+                    height: 100
+                    anchors.top: parent.top
+                    anchors.topMargin: 22
+                    anchors.horizontalCenter: parent.horizontalCenter
+
+                    Text {
+                        id: gameOverText
+                        text: "Game Over"
+                        verticalAlignment: Text.AlignVCenter
+                        horizontalAlignment: Text.AlignHCenter
+                        Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                        anchors.verticalCenterOffset: -49
+                        anchors.horizontalCenterOffset: 1
+                        color: "black"
+                        anchors.centerIn: parent
+                        font.pixelSize: Qt.application.font.pixelSize * 3
+                    }
+
+                    Text {
+                        id: finalScoreText
+                        text: plateau.stateQML[2]
+                        horizontalAlignment: Text.AlignHCenter
+                        anchors.centerIn: parent
+                        font.pixelSize: 12
+                    }
+
+                    Text {
+                        id: bestScoreText
+                        text: plateau.stateQML[4]
+                        font.pixelSize: 12
+                    }
+
+                    RowLayout {
+                            id: rowLayout
+                            width: 193
+                            height: 60
+                            anchors.horizontalCenter: parent.horizontalCenter
+
+                            ColumnLayout {
+                                width: 100
+                                height: 100
+
+                                Button {
+                                    id: nextButtonName_1
+                                    background: Rectangle{
+                                        color: "#00000000"
+                                    }
+                                    text: "\u25B2"
+                                    font.pixelSize: Qt.application.font.pixelSize * 1.6
+                                    onClicked: {
+                                        plateau.changeName(0,1);
+                                    }
+                                }
+
+                                Text {
+                                    id: nameText_1
+                                    anchors.horizontalCenter: parent.horizontalCenter
+                                    font.pixelSize: Qt.application.font.pixelSize * 2
+                                    font.bold: true
+                                    text: plateau.stateQML[3][0];
+                                }
+
+                                Button {
+                                    id: prevButtonName_1
+                                    background: Rectangle{
+                                        color: "#00000000"
+                                    }
+
+                                    text: "\u25BC"
+                                    font.pixelSize: Qt.application.font.pixelSize * 1.6
+                                    onClicked: {
+
+                                        plateau.changeName(0,-1);
+                                    }
+                                }
+                            }
+
+                            ColumnLayout {
+                                width: 100
+                                height: 100
+
+                                Button {
+                                    id: nextButtonName_2
+                                    background: Rectangle{
+                                        color: "#00000000"
+                                    }
+
+                                    text: "\u25B2"
+                                    font.pixelSize: Qt.application.font.pixelSize * 1.6
+                                    onClicked: {
+                                        plateau.changeName(1,1);
+                                    }
+                                }
+
+                                Text {
+                                    id: nameText_2
+                                    anchors.horizontalCenter: parent.horizontalCenter
+                                    font.pixelSize: Qt.application.font.pixelSize * 2
+                                    font.bold: true
+                                    text: plateau.stateQML[3][1];
+                                }
+
+                                Button {
+                                    id: prevButtonName_2
+                                    background: Rectangle{
+                                        color: "#00000000"
+                                    }
+
+                                    text: "\u25BC"
+                                    font.pixelSize: Qt.application.font.pixelSize * 1.6
+                                    onClicked: {
+                                        plateau.changeName(1,-1);
+                                    }
+                                }
+                            }
+
+                            ColumnLayout {
+                                width: 100
+                                height: 100
+
+                                Button {
+                                    id: nextButtonName_3
+                                    background: Rectangle{
+                                        color: "#00000000"
+                                    }
+
+                                    text: "\u25B2"
+                                    font.pixelSize: Qt.application.font.pixelSize * 1.6
+                                    onClicked: {
+                                        plateau.changeName(2,1);
+                                    }
+                                }
+
+                                Text {
+                                    id: nameText_3
+                                    anchors.horizontalCenter: parent.horizontalCenter
+                                    font.pixelSize: Qt.application.font.pixelSize * 2
+                                    font.bold: true
+                                    text: plateau.stateQML[3][2];
+                                }
+
+                                Button {
+                                    id: prevButtonName_3
+                                    background: Rectangle{
+                                        color: "#00000000"
+                                    }
+
+                                    text: "\u25BC"
+                                    font.pixelSize: Qt.application.font.pixelSize * 1.6
+                                    onClicked: {
+                                        plateau.changeName(2,-1);
+                                    }
+                                }
+                            }
+                        }
+
+
+                    RowLayout {
+                        width: 100
+                        height: 100
+                        anchors.horizontalCenter: parent.horizontalCenter
+
+                        Button {
+                            text: qsTr("Save Score")
+                            onClicked:{
+                                plateau.saveScore();
+                            }
+                        }
+                    }
+
+
+                }
+
+            }
+
+        }
 
         FileDialog {
             id: fileDialog
